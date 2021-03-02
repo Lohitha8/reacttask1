@@ -1,0 +1,16 @@
+.list{
+    color:white;
+    width:300px;
+    background-color:rgb(202, 143, 199);
+    margin:20px auto;
+    border-radius: 5px;
+    
+}
+.listp{
+    padding:10px;
+
+}
+.faicons{
+    float:right;
+
+}
