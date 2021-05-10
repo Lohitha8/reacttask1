@@ -12,7 +12,8 @@ class App extends React.Component {
       items: [],
       CurrentItem: {
         text: '',
-        key: ''
+        key: '',
+        status: ''
       }
     }
     this.handleInput = this.handleInput.bind(this);
@@ -24,7 +25,8 @@ class App extends React.Component {
     this.setState({
       CurrentItem: {
         text: e.target.value,
-        key: Date.now()
+        key: Date.now(),
+        status: 'new'
       }
     })
   }
@@ -32,23 +34,28 @@ class App extends React.Component {
   deleteItem(item) {
     console.log(item);
     const items = this.state.items;
-    const newItems = items.filter(x => x.key !== item);
+    // const newItems = items.filter(x => x.key !== item);
+    items.map(x => {
+      if (x.key == item) {
+        x.status = 'done';
+      }
+    })
     this.setState({
-      items: newItems
+      items: items
     })
   }
 
   addItem(e) {
     e.preventDefault();
     const newItem = this.state.CurrentItem;
-    if (newItem.text != "") {
+    if (newItem.text !== "") {
       const newItems = [...this.state.items, newItem];
       this.setState({
         items: newItems,
         CurrentItem: {
           text: '',
-          key: ''
-
+          key: '',
+          status: ''
         }
       })
     }
@@ -58,18 +65,18 @@ class App extends React.Component {
   render() {
     return (
       <div> <h2 className="header-todo">TO-DO-LIST</h2>
-      <div className="App"> 
-            
-        <header>         
-          <form id="to-do-list" onSubmit={this.addItem}>
-            <input type="text" placeholder="Enter Text"
-              value={this.state.CurrentItem.text}
-              onChange={this.handleInput} />
-            <button type="submit">Add</button>
-          </form>
-          <ListItems id='list' items={this.state.items} onDelete={this.deleteItem} />
-        </header>
-      </div>
+        <div className="App">
+
+          <header>
+            <form id="to-do-list" onSubmit={this.addItem}>
+              <input type="text" placeholder="Enter Text"
+                value={this.state.CurrentItem.text}
+                onChange={this.handleInput} />
+              <button type="submit">Add</button>
+            </form>
+            <ListItems id='list' items={this.state.items} onDelete={this.deleteItem} />
+          </header>
+        </div>
       </div>
 
     );
